@@ -1,7 +1,12 @@
 const bookForm = document.querySelector("#bookDetails")
 const display = document.querySelector("#display-books")
+const newbookBtn = document.querySelector("#addNewBook")
 
 const myLibrary = []
+
+newbookBtn.addEventListener("click", () => {
+    bookForm.style.display = "block"
+})
 
 bookForm.addEventListener("submit", (event) => {
     event.preventDefault()
@@ -20,6 +25,7 @@ bookForm.addEventListener("submit", (event) => {
     displayBooks()
 
     bookForm.reset()
+    bookForm.style.display = "none"
 })
 
 class Book {

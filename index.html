@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Library</title>
 </head>
 <body>
     <h1>Add book to library!</h1>
+
+    <button id="addNewBook">Add New Book</button><br><br>
 
     <form id="bookDetails">
         <label for="title">Title</label>
@@ -21,6 +24,7 @@
         <label for="bookDescription">Description of the book</label><br>
         <textarea name="bookDescription" id="bookDescription" rows="4" cols="50"></textarea><br><br>
 
+        <label for="status">Status</label>
         <select name="status">
             <option value="Read">Read</option>
             <option value="Not Read">Not Read</option>
