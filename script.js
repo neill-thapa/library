@@ -28,6 +28,15 @@ bookForm.addEventListener("submit", (event) => {
     bookForm.style.display = "none"
 })
 
+display.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+        const bookCard = e.target.closest("div")
+        const id = bookCard.dataset.id
+
+        deleteBook(id)
+    }
+})
+
 class Book {
     constructor(title, author, pages, about, status) {
         this.id = crypto.randomUUID()
@@ -49,14 +58,25 @@ function displayBooks() {
     myLibrary.forEach(book => {
         const bookCard = document.createElement("div")
 
+        bookCard.dataset.id = book.id
+
         bookCard.innerHTML = `
         <h3>${book.title}</h3>
         <p>Author: ${book.author}</p>
         <p>Pages: ${book.pages}</p>
         <p>Description: ${book.about}</p>
         <p>Status: ${book.status}</p>
+        <button class="delete-btn">Delete</button>
         `
 
         display.appendChild(bookCard)
     })
+}
+
+function deleteBook(book_id) {
+    const index = myLibrary.findIndex(book => book.id === book_id)
+
+    myLibrary.splice(index, 1) // remove only one element which is at index
+
+    displayBooks()
 }
