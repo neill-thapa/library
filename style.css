@@ -141,7 +141,6 @@ header {
 .cardsBook {
     padding: var(--spacing-md);
     border: 1px solid var(--color-secondary);
-    overflow-y: scroll;
 }
 
 .book-card {
