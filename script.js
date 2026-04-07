@@ -35,6 +35,14 @@ display.addEventListener("click", (e) => {
 
         deleteBook(id)
     }
+
+    if (e.target.classList.contains("toggle-btn")) {
+        const bookCard = e.target.closest("div")
+        const id = bookCard.dataset.id
+
+        console.log(`Clicked. Id: ${id}`)
+        toggleStatus(id)
+    }
 })
 
 class Book {
@@ -45,6 +53,10 @@ class Book {
         this.pages = pages
         this.about = about
         this.status = status
+    }
+
+    toggleStatus() {
+        this.status = this.status === "Read" ? "Not Read" : "Read"
     }
 }
 
@@ -67,6 +79,9 @@ function displayBooks() {
         <p>Description: ${book.about}</p>
         <p>Status: ${book.status}</p>
         <button class="delete-btn">Delete</button>
+        <button class="toggle-btn">
+        ${book.status === "Read" ? "Mark Unread" : "Mark Read"}
+        </button>
         `
 
         display.appendChild(bookCard)
@@ -77,6 +92,14 @@ function deleteBook(book_id) {
     const index = myLibrary.findIndex(book => book.id === book_id)
 
     myLibrary.splice(index, 1) // remove only one element which is at index
+
+    displayBooks()
+}
+
+function toggleStatus(id) {
+    const book = myLibrary.find(book => book.id === id)
+
+    book.toggleStatus()
 
     displayBooks()
 }
