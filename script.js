@@ -1,12 +1,7 @@
-const bookForm = document.querySelector("#bookDetails")
-const display = document.querySelector("#display-books")
-const newbookBtn = document.querySelector("#addNewBook")
+const bookForm = document.querySelector(".bookDetails")
+const display = document.querySelector(".display-books")
 
 const myLibrary = []
-
-newbookBtn.addEventListener("click", () => {
-    bookForm.style.display = "block"
-})
 
 bookForm.addEventListener("submit", (event) => {
     event.preventDefault()
@@ -25,22 +20,23 @@ bookForm.addEventListener("submit", (event) => {
     displayBooks()
 
     bookForm.reset()
-    bookForm.style.display = "none"
 })
 
 display.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-btn")) {
-        const bookCard = e.target.closest("div")
+        const bookCard = e.target.closest(".book-card")
         const id = bookCard.dataset.id
 
         deleteBook(id)
     }
 
     if (e.target.classList.contains("toggle-btn")) {
-        const bookCard = e.target.closest("div")
+        const bookCard = e.target.closest(".book-card")
+        if(!bookCard) return
+
         const id = bookCard.dataset.id
 
-        console.log(`Clicked. Id: ${id}`)
+        console.log("clicked")
         toggleStatus(id)
     }
 })
@@ -69,19 +65,28 @@ function displayBooks() {
 
     myLibrary.forEach(book => {
         const bookCard = document.createElement("div")
+        bookCard.classList.add("book-card")
 
         bookCard.dataset.id = book.id
 
         bookCard.innerHTML = `
-        <h3>${book.title}</h3>
-        <p>Author: ${book.author}</p>
-        <p>Pages: ${book.pages}</p>
-        <p>Description: ${book.about}</p>
-        <p>Status: ${book.status}</p>
-        <button class="delete-btn">Delete</button>
-        <button class="toggle-btn">
-        ${book.status === "Read" ? "Mark Unread" : "Mark Read"}
-        </button>
+        <div class="book-info">
+            <div class="card-header">
+                <h3>${book.title}</h3>
+            </div>
+            <div class="card-body">
+                <p><span class="book-keys">Author</span> : ${book.author}</p>
+                <p><span class="book-keys">Pages</span> : ${book.pages}</p>
+                <p><span class="book-keys">Description</span> : ${book.about}</p>
+                <p class="book-status">Status : ${book.status}</p>
+            </div>
+        </div>
+        <div class="card-buttons">
+            <button class="delete-btn">Delete</button>
+            <button class="toggle-btn">
+            ${book.status === "Read" ? "Mark Unread" : "Mark Read"}
+            </button>
+        </div>
         `
 
         display.appendChild(bookCard)
@@ -99,7 +104,9 @@ function deleteBook(book_id) {
 function toggleStatus(id) {
     const book = myLibrary.find(book => book.id === id)
 
+    console.log("inside function")
     book.toggleStatus()
+    console.log(`function worked: ${book.status}`)
 
     displayBooks()
 }
